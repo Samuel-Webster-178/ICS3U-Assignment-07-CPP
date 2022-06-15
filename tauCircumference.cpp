@@ -2,26 +2,61 @@
 //
 // Created by Samuel Webster
 // Created on February 2022
-// Calculates perimeter and area of a rectangle
-//     with dimensions inputted from user
+// This program calculates the perimeter of a square
+//     with inputted side length
 
 #include <iostream>
+#include <list>
+
+std::list<std::string> reorderList(std::list<std::string> inpt) {
+    // I calculate perimeter of a square
+    std::list<std::string> outpt;
+    for (
+        std::list<std::string>::iterator input_position = inpt.begin();
+        input_position != inpt.end();
+        input_position++
+    ) {
+        std::list<std::string>::iterator output_position = outpt.begin();
+        while ((*output_position).length() > (*input_position).length()) {
+            output_position++;
+        }
+        outpt.insert(output_position, *input_position);
+    }
+    return outpt;
+}
+
 
 int main() {
-    // I calculate circumference of a circle
-    const double TAU = 6.28;
-    int radius;
-    double circumference;
+    // I am main, I manage input and output
+    std::list<std::string> inpt;
+    std::list<std::string> outpt;
+    std::string inputtedString;
 
-    // input
-    std::cout << "Enter radius of the circle in mm: ";
-    std::cin >> radius;
+    // input & process
+    while (true) {
+        // I repeat until exit condition is inputted ("-Finish")
+        std::cout << "Enter string: ";
+        std::cin >> inputtedString;
+        if (inputtedString == "-Finish") {
+            break;
+        } else {
+            inpt.push_back(inputtedString);
+        }
+    }
+    std::cout << std::endl;
 
-    // process
-    circumference = TAU*radius;
+    // call function
+    outpt = reorderList(inpt);
 
     // output
-    std::cout << "" << std::endl;
-    std::cout << "Circumference is " << circumference << " mm" << std::endl;
+    std::cout << "Input from longest to shortest is: ";
+    for (std::string tempWord : outpt) {
+        std::cout << tempWord;
+        if (tempWord != outpt.back()) {
+            std::cout << ", ";
+        } else {
+            std::cout << std::endl;
+        }
+    }
     std::cout << "\nDone." << std::endl;
 }
